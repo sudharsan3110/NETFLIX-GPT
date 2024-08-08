@@ -21,8 +21,20 @@ features
         -Movie Suggestion 
 -Netflix gpt 
 
+    ubsubscribe to onAuthStateChange 
 forms 
 
 step1: buid login  form 
 
 
+planning the main page 
+    1. main video part most trending movie 
+    2. list of movie underneath it 
+   
+    -Main containter 
+        -videoBackground 
+        -VideoTitle
+    -Secondary containter  
+        - movielist *n 
+        -cards *n 
+        

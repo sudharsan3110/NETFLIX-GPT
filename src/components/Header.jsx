@@ -1,45 +1,89 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAuth, signOut } from "firebase/auth";
+import {  onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { auth } from "../utils/firebase";
+import { addUser, removeUser } from "../utils/UserSlice";
+import { LOGO, PROFILE_URL, SUPPORTED_LANGUAGES } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/GptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 
 const Header = () => {
-
-  const navigate = useNavigate ();
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const user = useSelector((state) => state.name);
-  const PROFILE_PIC = user?.photoURL;
+  const handleclickgpt = () =>{
+    dispatch(toggleGptSearchView());
+  }
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
   const handleclick = () => {
-   
-    const auth = getAuth();
     signOut(auth)
       .then(() => {
-        
-        navigate("/")
-        // Sign-out successful.
-      })
+        })
       .catch((error) => {
-        // An error happened.
-        navigate("/error")
+        navigate("/error");
       });
   };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+
+    // Unsiubscribe when component unmounts 
+    return () => unsubscribe();
+  }, []);
   return (
-    <div className=" flex  justify-between w-[100%] absolute px-30 align-middle bg-gradient-to-b from-black">
+    <div className=" absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between ">
       <img
-        src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
+        className="w-[150px] h-[50px] mx-auto md:mx-0 "
+        src={LOGO}
         alt="NETFLIX LOGO"
-        className="w-[300px] h-[100px] my-5 mx-5"
       />
       {user && (
         <div className="flex p-2 m-2">
+          {showGptSearch && (
+            <select
+              className="p-2 m-2 bg-gray-900 text-white"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button onClick={handleclickgpt} className="bg-purple-600 p-2 rounded-xl  m-3 text-white font-bold">
+            ChatGpt
+          </button>
           <img
-            src={PROFILE_PIC}
+            src={PROFILE_URL}
             alt="image_logo"
-            className="rounded-full w-24 h-24 m-3 border shadow-xl border-gray-200"
+            className="rounded-full w-12 h-12 m-3 border shadow-xl border-gray-200"
           />
           <button
             onClick={handleclick}
-            className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 h-16 my-6"
+            className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5  me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 h-12 my-3"
           >
             Sign out{" "}
           </button>

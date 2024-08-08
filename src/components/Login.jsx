@@ -8,15 +8,16 @@ import {
 } from "firebase/auth";
 //rafce react arrow functoin export component
 import Header from "./Header";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/UserSlice";
+import { MAIN_PAGE } from "../utils/constants";
 
 const Login = () => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
-  const navigate = useNavigate();
+ 
   const dispatch = useDispatch();
   const [isSignInForm, setIsSignInform] = useState(true);
   const [errorMessage, setErrorMessage] = useState("null");
@@ -30,7 +31,7 @@ const Login = () => {
       email.current.value,
       password.current.value,
     );
-    console.log(message);
+
     setErrorMessage(message);
     if (!isSignInForm) {
       createUserWithEmailAndPassword(
@@ -41,12 +42,12 @@ const Login = () => {
         .then((userCredentials) => {
 
           const user = userCredentials.user;
-          console.log(user);
+          
          
           updateProfile(user, {
             displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/115058137?v=4"
           }).then(() => {
-            navigate("/browse")
+            
             const { uid, email, displayName,photoURL } = user;
             dispatch(addUser({ uid: uid, email: email, displayName: displayName,photoURL: photoURL}));
           
@@ -62,7 +63,7 @@ const Login = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorMessage);
-          console.log(errorCode + "  " + errorMessage);
+
           // ..
         });
     } else {
@@ -74,15 +75,15 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate("/browse")
+         
+    
           // ...
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorMessage);
-          console.log(errorCode + "  " + errorMessage);
+      
         });
     }
  
@@ -95,7 +96,7 @@ const Login = () => {
       <Header />
       <div>
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/0552717c-9d8c-47bd-9640-4f4efa2de663/537e2c5e-c750-4d4c-9f7a-e66fe93eb977/IN-en-20240701-POP_SIGNUP_TWO_WEEKS-perspective_WEB_b00eeb83-a7e8-4b5b-8ff7-86ed92c51caf_large.jpg"
+          src={MAIN_PAGE}
           alt="NETFLIX LOGO"
         />
       </div>
