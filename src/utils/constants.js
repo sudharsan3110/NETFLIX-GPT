@@ -1,3 +1,4 @@
+
 export const LOGO = "https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
 
 export const PROFILE_URL ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRKNdKRIgbcMkyGq1cQeq40IA-IQS-FDWnTQ&s"
@@ -8,7 +9,7 @@ export const MOVIE_LIST = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0OGYwMzgwOTU3OWJjNGNkNGEyZWUxOTU3NTg0MWU0ZCIsIm5iZiI6MTcyMTU0MTIxNS41NDA4NzYsInN1YiI6IjY2OWNhMDI0NGNlODM4MTE3MmM1NWIyYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8se8j9f_BV20OyI5oPwZX0lHSB1ar2zW6PI3BKPOX4Y'
+    Authorization: "Bearer "+ import.meta.env.VITE_APP_TMDB_AI
   }
 };
 
@@ -23,4 +24,4 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "tamil", name: "Tamil" },
 ];
 
-export const NETFLIX_API ="AIzaSyD4HEdGRj_YZA3TYKnf9XrnC0Fo4OoPH_c"
+export const NETFLIX_API = import.meta.env.VITE_APP_OPEN_AI
