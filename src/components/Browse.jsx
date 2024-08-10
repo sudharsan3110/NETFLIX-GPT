@@ -7,16 +7,16 @@ import { useSelector } from "react-redux";
 const Browse = () => {
   useNowPLayingMovie();
   const showGptSearch = useSelector((store)=>store?.gpt?.showGptSearch)
-  console.log(showGptSearch);
+  
 
   return <div >
     <Header/>
-    
     {showGptSearch ? (<Gptseach/>):
     <>
-    (<Maincontainer/>
-    <SecondaryContainer/>)
-    </>}
+    <Maincontainer/>
+    <SecondaryContainer/>
+    </>
+    }
     </div>;
 };
 

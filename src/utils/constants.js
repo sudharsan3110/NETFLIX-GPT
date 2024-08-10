@@ -20,4 +20,7 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "en", name: "English" },
   { identifier: "hindi", name: "Hindi" },
   { identifier: "spanish", name: "Spanish" },
+  { identifier: "tamil", name: "Tamil" },
 ];
+
+export const NETFLIX_API ="AIzaSyD4HEdGRj_YZA3TYKnf9XrnC0Fo4OoPH_c"

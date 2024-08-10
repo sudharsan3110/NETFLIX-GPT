@@ -1,16 +1,18 @@
-import { MAIN_PAGE } from "../utils/constants.js"
-import GptmovieSuggestion from "./Gptmoviesuggestion.jsx"
-import Gptsearchbar from "./Gptsearchbar"
+import { MAIN_PAGE } from "../utils/constants.js";
+import Gptseachsugestion from "./Gptseachsugestion.jsx";
+import Gptsearchbar from "./Gptsearchbar";
 const Gptseach = () => {
+  
   return (
-    <div>
-      <div className="absolute -z-10">
-        <img src={MAIN_PAGE} alt="logo" />
+    
+   <div  className="">
+      <div className="absolute -z-10 max-h-fit max-w-fit bg-black ">
+        <img src={MAIN_PAGE} alt="logo"  className="object-cover w-full h-full" />
       </div>
-     <Gptsearchbar/>
-     <GptmovieSuggestion/>
+      <Gptsearchbar />
+      <Gptseachsugestion />
     </div>
-  )
-}
+  );
+};
 
-export default Gptseach
+export default Gptseach;

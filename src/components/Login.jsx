@@ -17,7 +17,7 @@ const Login = () => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
- 
+
   const dispatch = useDispatch();
   const [isSignInForm, setIsSignInform] = useState(true);
   const [errorMessage, setErrorMessage] = useState("null");
@@ -29,7 +29,7 @@ const Login = () => {
     const message = checkValidate(
       auth,
       email.current.value,
-      password.current.value,
+      password.current.value
     );
 
     setErrorMessage(message);
@@ -37,27 +37,34 @@ const Login = () => {
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value,
+        password.current.value
       )
         .then((userCredentials) => {
-
           const user = userCredentials.user;
-          
-         
+
           updateProfile(user, {
-            displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/115058137?v=4"
-          }).then(() => {
-            
-            const { uid, email, displayName,photoURL } = user;
-            dispatch(addUser({ uid: uid, email: email, displayName: displayName,photoURL: photoURL}));
-          
-            // Profile updated!
-            // ...
-          }).catch((error) => {
-            setErrorMessage(error)
-            // An error occurred
-            // ...
-          });
+            displayName: name.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/115058137?v=4",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = user;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+
+              // Profile updated!
+              // ...
+            })
+            .catch((error) => {
+              setErrorMessage(error);
+              // An error occurred
+              // ...
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -70,35 +77,25 @@ const Login = () => {
       signInWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value,
+        password.current.value
       )
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-         
-    
-          // ...
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorMessage);
-      
         });
     }
- 
-    
   };
- 
 
   return (
     <div>
       <Header />
       <div>
-        <img
-          src={MAIN_PAGE}
-          alt="NETFLIX LOGO"
-        />
+        <img src={MAIN_PAGE} alt="NETFLIX LOGO" />
       </div>
       <div>
         <form
@@ -110,7 +107,6 @@ const Login = () => {
           </h1>
           {!isSignInForm && (
             <input
-              
               type="text"
               ref={name}
               placeholder="name"

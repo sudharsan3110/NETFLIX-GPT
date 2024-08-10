@@ -11,6 +11,10 @@ const lang = {
       search: "buscar",
       gptSearchPlaceholder: "¿Qué te gustaría ver hoy?",
     },
+    tamil:{
+      search:"தேடு",
+      gptSearchPlaceholder: "இன்று நீங்கள் என்ன பார்க்க விரும்புகிறீர்கள்",
+    }
   };
   
   export default lang;
