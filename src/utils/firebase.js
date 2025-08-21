@@ -5,7 +5,7 @@ import { getAuth } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+ const firebaseConfig = {
   apiKey: "AIzaSyBj3AInajZFPntgnC8grIEFmOGiV3CRk-E",
   authDomain: "netflixgpt-9f28a.firebaseapp.com",
   projectId: "netflixgpt-9f28a",
