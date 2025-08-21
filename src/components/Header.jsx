@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { auth } from "../utils/firebase";
 import { addUser, removeUser } from "../utils/UserSlice";
@@ -12,6 +11,8 @@ import { changeLanguage } from "../utils/configSlice";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const headeritems = ["home", "tvshow", "movie", "games", "new & popular"];
+
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const user = useSelector((state) => state.name);
   const handleclickgpt = () => {
@@ -45,49 +46,58 @@ const Header = () => {
         navigate("/");
       }
     });
-
-    // Unsiubscribe when component unmounts
     return () => unsubscribe();
   }, []);
-  return (<div>
-  <div className=" absolute w-screen px-20 py-2 bg-gradient-to-b from-black z-10 flex justify-between ">
-      <img
-        className="w-[150px] h-[100px]  mx-auto md:mx-0 "
-        src={LOGO}
-        alt="NETFLIX LOGO"
-        
-      />
-      {user && (
-        <div className="flex p-2 m-2">
-          {showGptSearch && (
-            <select
-              className="p-2 m-2 bg-gray-900 text-white"
-              onChange={handleLanguageChange}>
-              {SUPPORTED_LANGUAGES.map((lang) => (
-                <option key={lang.identifier} value={lang.identifier}>
-                  {lang.name}
-                </option>
-              ))}
-            </select>
-          )}
-          <button
-            onClick={handleclickgpt}
-            className="bg-purple-600 p-2 rounded-xl  m-3 text-white font-bold">
-            ChatGpt
-          </button>
-          <img
-            src={PROFILE_URL}
-            alt="image_logo"
-            className="rounded-full w-12 h-12 m-3 border shadow-xl border-gray-200"
-          />
-          <button
-            onClick={handleclick}
-            className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5  me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 h-12 my-3">
-            Sign out{" "}
-          </button>
-        </div>
-      )}
-    </div>
+  return (
+    <div>
+      <div className=" absolute w-screen px-20 py-2 bg-gradient-to-b from-black z-10 flex justify-between ">
+        <img
+          className="w-[100px] h-[40px]  mx-auto md:mx-0 "
+          src={LOGO}
+          alt="NETFLIX LOGO"
+        />
+        {console.log(headeritems)}
+        {user && (
+          <div className="flex flex-row space-x-2 capitalize">
+            {headeritems.map((item) => {
+              return <div className="text-white z-10 ">{item}</div>;
+            })}
+          </div>
+        )}
+        {user && (
+          <div className="flex p-2 m-2">
+            {showGptSearch && (
+              <select
+                className="p-2 m-2 bg-gray-900 text-white"
+                onChange={handleLanguageChange}
+              >
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <option key={lang.identifier} value={lang.identifier}>
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
+            )}
+            <button
+              onClick={handleclickgpt}
+              className="bg-purple-600 p-2 rounded-xl  m-3 text-white font-bold"
+            >
+              ChatGpt
+            </button>
+            <img
+              src={PROFILE_URL}
+              alt="image_logo"
+              className="rounded-full w-12 h-12 m-3 border shadow-xl border-gray-200"
+            />
+            <button
+              onClick={handleclick}
+              className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5  me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 h-12 my-3"
+            >
+              Sign out{" "}
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
